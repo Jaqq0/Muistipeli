@@ -1,4 +1,4 @@
-import { createCardElement, flipCard } from './card.js';
+import { createCardElement} from './card.js';
 
 const allCards = [
     'cards/card1.png',
@@ -33,12 +33,14 @@ export function createBoard(cardCount) {
     shuffle(cards);
     cards.forEach(card => {
         const cardElement = createCardElement(card);
-        cardElement.addEventListener('click', () => flipCard(cardElement, handleCardFlip));
+        cardElement.addEventListener('click', handleCardFlip);
         gameBoard.appendChild(cardElement);
     });
 }
 
-function handleCardFlip(cardElement) {
+function handleCardFlip(event) {
+    const cardElement = event.currentTarget;
+
     if (lockBoard) return;
     if (cardElement === firstCard) return;
 
@@ -50,22 +52,26 @@ function handleCardFlip(cardElement) {
     }
 
     secondCard = cardElement;
+    lockBoard = true;
     checkForMatch();
 }
 
 function checkForMatch() {
     let isMatch = firstCard.dataset.card === secondCard.dataset.card;
-    isMatch ? disableCards() : unflipCards();
+    if (isMatch) {
+        disableCards();
+    } else {
+        unflipCards();
+    }
 }
 
 function disableCards() {
-    firstCard.removeEventListener('click', flipCard);
-    secondCard.removeEventListener('click', flipCard);
+    firstCard.style.pointerEvents = 'none';
+    secondCard.style.pointerEvents = 'none';
     resetBoard();
 }
 
 function unflipCards() {
-    lockBoard = true;
     setTimeout(() => {
         firstCard.classList.remove('flipped');
         secondCard.classList.remove('flipped');
