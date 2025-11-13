@@ -70,8 +70,44 @@ body {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-bottom: 30px;
 }
 
 #restart-btn:hover {
     background-color: #0056b3;
+}
+
+.controls {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#card-count {
+    padding: 5px 10px;
+    font-size: 16px;
+}
+
+#restart-btn {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#restart-btn:hover {
+    background-color: #0056b3;
+}
+
+#message {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #2a9d8f;
+    text-align: center;
 }

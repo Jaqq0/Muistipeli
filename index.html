@@ -8,8 +8,22 @@
 </head>
 <body>
     <h1>Muistipeli</h1>
+
+    <div class="controls">
+        <label for="card-count">Korttien määrä</label>
+        <select id="card-count">
+            <option value="4">4</option>
+            <option value="6">6</option>
+            <option value="8">8</option>
+            <option value="10">10</option>
+            <option value="12">12</option>
+            <option value="14">14</option>
+            <option value="16">16</option>
+        </select>
+    </div>
     <button id="restart-btn">Aloita alusta</button>
     <div id="game-board"></div>
+    <p id="message"></p>
     <script type="module" src="./js/game.js"></script>
 </body>
 </html>

@@ -19,8 +19,3 @@ export function createCardElement(card) {
     return cardElement;
 }
 
-export function flipCard(cardElement, callback) {
-    if (cardElement.classList.contains('flipped')) return;
-    cardElement.classList.add('flipped');
-    callback(cardElement);
-}

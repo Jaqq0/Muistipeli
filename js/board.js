@@ -22,15 +22,33 @@ const gameBoard = document.getElementById('game-board');
 let firstCard = null;
 let secondCard = null;
 let lockBoard = false;
+let matchesfound = 0;
+let totalPairs = 0;
+let tries = 0;
 
 function shuffle(array) {
-    array.sort(() => Math.random() - 0.5);
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
 }
 
 export function createBoard(cardCount) {
+    firstCard = null;
+    secondCard = null;
+    lockBoard = false;
+    matchesfound = 0;
+    tries = 0;
+    totalPairs = cardCount / 2;
+
+    const messageElement = document.getElementById('message');
+    messageElement.textContent = '';
+    
     const selectedCards = allCards.slice(0, cardCount / 2);
     const cards = [...selectedCards, ...selectedCards];
     shuffle(cards);
+
+    gameBoard.innerHTML = '';
     cards.forEach(card => {
         const cardElement = createCardElement(card);
         cardElement.addEventListener('click', handleCardFlip);
@@ -53,6 +71,7 @@ function handleCardFlip(event) {
 
     secondCard = cardElement;
     lockBoard = true;
+    tries++;
     checkForMatch();
 }
 
@@ -68,7 +87,14 @@ function checkForMatch() {
 function disableCards() {
     firstCard.style.pointerEvents = 'none';
     secondCard.style.pointerEvents = 'none';
+
+    matchesfound++;
     resetBoard();
+
+    if (matchesfound === totalPairs) {
+        const messageElement = document.getElementById('message');
+        messageElement.textContent = `Voitit pelin ${tries} yrityksellä!`;
+    }
 }
 
 function unflipCards() {
@@ -76,7 +102,7 @@ function unflipCards() {
         firstCard.classList.remove('flipped');
         secondCard.classList.remove('flipped');
         resetBoard();
-    }, 1500);
+    }, 1000);
 }
 
 function resetBoard() {
